@@ -31,7 +31,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12 d-flex justify-content-center">
+            <div class="col-md-12 d-flex justify-content-center pagination">
                 {% for page_num in reviews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
 
                     {% if page_num %} <!-- If page num isn't none -->
