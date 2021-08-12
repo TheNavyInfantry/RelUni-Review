@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Welcome
+{% endblock title %}
+
+{% block content %}
+
+    <div class="container mt-3">
+        <div class="row">
+            {% for review in reviews.items %}
+                <div class="card border-secondary col-md-12 mb-3">
+                    <div class="card-body">
+                        <div class="card-title h3 text-primary font-weight-bold text-center">
+                            {{ review.title }}
+                        </div>
+
+                        <div class="card-subtitle text-primary text-center mb-2">
+                            {{ review.time_stamp.strftime('%H:%M - %Y.%m.%d') }}
+                        </div>
+
+                        <p class="card-text text-dark line_break text-center">
+                            {{ review.content }}
+                        </p>
+
+                        <div>
+                            <h5>
+                                <a class="float-right" href="{{ url_for('posts.delete_review', review_id=review.id) }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+
+                                <a class="float-right mx-1" href="{{ url_for('posts.update_review', review_id=review.id) }}">
+
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center">
+                {% for page_num in reviews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+
+                    {% if page_num %} <!-- If page num isn't none -->
+                        {% if reviews.page == page_num %} <!-- If page num isn't none -->
+                            <a class="btn btn-dark mb-4 ml-1 mr-1"
+                               href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+                        {% else %}
+                            <a class="btn btn-outline-secondary mb-4 ml-1 mr-1"
+                               href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-primary mt-3 ml-1 mr-1">...</p>
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

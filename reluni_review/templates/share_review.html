@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    New Review
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <span class="border border-secondary rounded mx-2 my-4 px-5 py-3">
+                <form method="POST" class="form-login">
+                    {{ form.hidden_tag() }}
+
+                    <h2 class="text-center text-dark mt-4 mb-4">Share Your Review With Us!</h2>
+
+                    <div class="form-group justify-content-center text-dark mb-1">
+                        {{ form.title.label() }}
+                        {{ form.title(class="form-control", placeholder="Shall we write a fancy title?") }}
+                    <br>
+                        {{ form.content_text.label() }}
+                        {{ form.content_text(class="form-control", rows="5", placeholder="What will your review be like?")}}
+                    </div>
+                    <br>
+
+                    <div class="container">
+                        <div class="d-flex justify-content-center">
+                                {{ form.submit(class="btn btn-dark") }}
+                        </div>
+                    </div>
+
+                </form>
+            </span>
+        </div>
+    </div>
+{% endblock content %}
