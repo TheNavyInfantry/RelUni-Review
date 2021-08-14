@@ -12,14 +12,16 @@
                     {{ form.hidden_tag() }}
                     <h3 class="text-center text-dark mt-4 mb-4">Log In</h3>
 
-                    <div class="form-group justify-content-center text-dark mb-1">
+                    <div class="form-group justify-content-center text-dark">
                         {{ form.email_address.label() }}
                         {{ form.email_address(class="form-control", placeholder="Email Address") }}
                         <br>
                         {{ form.password.label() }}
                         {{ form.password(class="form-control", placeholder="Password") }}
+                        <a class="align-middle text-secondary text-decoration-none pt-1" href="{{ url_for('users.reset_request') }}">Forgot Password?</a>
+
                     </div>
-                    <br>
+
                     <div class="container">
                         <div class="row">
                             <div class="col-sm d-flex justify-content-center">
