@@ -1,5 +1,8 @@
+import os, yaml
 from reluni_review import db, datetime, bcrypt, login_manager
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from reluni_review.config import Config
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -11,6 +14,24 @@ class User(db.Model, UserMixin):
     email_address = db.Column(db.String(length=60), unique=True, nullable=False)
     password_hash = db.Column(db.String(length=60), nullable=False)
     posts = db.relationship('Post', backref='user', lazy=True)
+
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(Config.config["secret_key"], expires_sec)
+        return s.dumps({'user_id':self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(Config.config["secret_key"])
+
+        try:
+            user_id = s.loads(token)['user_id']
+
+        except:
+            return None
+
+        return User.query.get(user_id)
+
 
     @property
     def password(self):
